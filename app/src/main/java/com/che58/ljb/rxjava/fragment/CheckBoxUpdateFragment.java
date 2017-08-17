@@ -63,8 +63,7 @@ public class CheckBoxUpdateFragment extends RxFragment {
 
         checkBox1.setChecked(xxFunction.get());
 
-        RxCompoundButton.checkedChanges(checkBox1)
-                .subscribe(xxFunction.asAction());
+        RxCompoundButton.checkedChanges(checkBox1).subscribe(xxFunction.asAction());
     }
 
     /**
