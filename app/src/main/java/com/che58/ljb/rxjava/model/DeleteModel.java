@@ -35,6 +35,15 @@ public class DeleteModel {
         this.entity = entity;
     }
 
+    @Override
+    public String toString() {
+        return "DeleteModel{" +
+                "code=" + code +
+                ", message='" + message + '\'' +
+                ", entity=" + entity +
+                '}';
+    }
+
     private class XgoEntity {
 
         private Data data;
@@ -49,6 +58,13 @@ public class DeleteModel {
 
         public void setData(Data data) {
             this.data = data;
+        }
+
+        @Override
+        public String toString() {
+            return "XgoEntity{" +
+                    "data=" + data +
+                    '}';
         }
 
         private class Data {
@@ -94,6 +110,16 @@ public class DeleteModel {
                 this.links = links;
             }
 
+            @Override
+            public String toString() {
+                return "Data{" +
+                        "id=" + id +
+                        ", name='" + name + '\'' +
+                        ", value='" + value + '\'' +
+                        ", links=" + links +
+                        '}';
+            }
+
             private class Links {
 
                 private String rel;
@@ -117,6 +143,14 @@ public class DeleteModel {
 
                 public void setHref(String href) {
                     this.href = href;
+                }
+
+                @Override
+                public String toString() {
+                    return "Links{" +
+                            "rel='" + rel + '\'' +
+                            ", href='" + href + '\'' +
+                            '}';
                 }
             }
         }

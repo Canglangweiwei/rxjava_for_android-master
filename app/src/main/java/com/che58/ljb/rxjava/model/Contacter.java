@@ -15,4 +15,11 @@ public class Contacter {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Contacter{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

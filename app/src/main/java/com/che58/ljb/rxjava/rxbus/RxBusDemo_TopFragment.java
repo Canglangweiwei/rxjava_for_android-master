@@ -21,9 +21,7 @@ public class RxBusDemo_TopFragment extends RxFragment {
     private RxBus _rxBus;
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_rxbus_top, container, false);
         ButterKnife.bind(this, layout);
         return layout;
@@ -36,8 +34,8 @@ public class RxBusDemo_TopFragment extends RxFragment {
     }
 
     @OnClick(R.id.btn_demo_rxbus_top)
-    public void onTapButtonClicked() {
-        if (_rxBus.hasObservers()) {    //是否有观察者，有，则发送一个事件
+    void onTapButtonClicked() {
+        if (_rxBus.hasObservers()) {    // 是否有观察者，有，则发送一个事件
             _rxBus.send(new RxBusDemoFragment.TapEvent());
         }
     }

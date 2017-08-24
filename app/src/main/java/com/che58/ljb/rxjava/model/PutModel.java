@@ -37,6 +37,15 @@ public class PutModel {
         this.entity = entity;
     }
 
+    @Override
+    public String toString() {
+        return "PutModel{" +
+                "code=" + code +
+                ", message='" + message + '\'' +
+                ", entity=" + entity +
+                '}';
+    }
+
     private class XgoEntity {
 
         private List<Data> data;
@@ -55,6 +64,13 @@ public class PutModel {
 
         private class Data {
 
+        }
+
+        @Override
+        public String toString() {
+            return "XgoEntity{" +
+                    "data=" + data +
+                    '}';
         }
     }
 }

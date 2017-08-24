@@ -1,13 +1,19 @@
 package com.che58.ljb.rxjava.act;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.che58.ljb.rxjava.R;
 import com.che58.ljb.rxjava.fragment.main.MainFragment;
 import com.che58.ljb.rxjava.rxbus.RxBus;
 import com.trello.rxlifecycle.components.support.RxFragmentActivity;
 
+import butterknife.Bind;
+
 public class MainActivity extends RxFragmentActivity {
+
+    @Bind(R.id.main_tv_title)
+    TextView mainTitle;
 
     private RxBus _rxBus;
 

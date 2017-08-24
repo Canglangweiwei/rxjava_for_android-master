@@ -24,18 +24,17 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.observables.ConnectableObservable;
 
-public class RxBusDemo_Bottom3Fragment extends RxFragment {
+public class RxBusDemo_BottomFragment extends RxFragment {
 
     @Bind(R.id.demo_rxbus_tap_txt)
     TextView _tapEventTxtShow;
     @Bind(R.id.demo_rxbus_tap_count)
     TextView _tapEventCountShow;
+
     private RxBus _rxBus;
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_rxbus_bottom, container, false);
         ButterKnife.bind(this, layout);
         return layout;
@@ -50,12 +49,11 @@ public class RxBusDemo_Bottom3Fragment extends RxFragment {
     @Override
     public void onStart() {
         super.onStart();
-
-        //将普通的Observable转换为可连接的Observable
+        // 将普通的Observable转换为可连接的Observable
         ConnectableObservable<Object> publish = _rxBus.toObserverable().publish();
 
         publish.compose(this.bindToLifecycle())
-                .subscribe(new Action1<Object>() { //一个一旦被触发就会显示TapText的监听者
+                .subscribe(new Action1<Object>() { // 一个一旦被触发就会显示TapText的监听者
                     @Override
                     public void call(Object event) {
                         if (event instanceof RxBusDemoFragment.TapEvent) {
@@ -65,24 +63,20 @@ public class RxBusDemo_Bottom3Fragment extends RxFragment {
                 });
 
         publish.compose(this.bindUntilEvent(FragmentEvent.DESTROY))
-                .publish(new Func1<Observable<Object>, Observable<List<Object>>>() {//一个出发后缓存一秒内的点击数并显示的监听者
+                .publish(new Func1<Observable<Object>, Observable<List<Object>>>() {// 一个出发后缓存一秒内的点击数并显示的监听者
                     @Override
                     public Observable<List<Object>> call(Observable<Object> stream) {
-                        return stream.buffer(stream.debounce(1, TimeUnit.SECONDS)); //进行缓冲1秒，打包发送
+                        return stream.buffer(stream.debounce(1, TimeUnit.SECONDS)); // 进行缓冲1秒，打包发送
                     }
-                }).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<List<Object>>() {
-            @Override
-            public void call(List<Object> taps) {
-                _showTapCount(taps.size());
-            }
-        });
-
-        publish.connect();  //可连接的Observable并不在订阅时触发，而需手动调用connect()方法
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<Object>>() {
+                    @Override
+                    public void call(List<Object> taps) {
+                        _showTapCount(taps.size());
+                    }
+                });
+        publish.connect();  // 可连接的Observable并不在订阅时触发，而需手动调用connect()方法
     }
 
     // -----------------------------------------------------------------------------------
