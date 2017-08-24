@@ -142,7 +142,6 @@ public class DebounceFragment extends RxFragment {
 
             @Override
             public void call(Subscriber<? super List<String>> subscriber) {
-
                 boolean b = Thread.currentThread() == Looper.getMainLooper().getThread();
                 XgoLog.d("IO线程::" + !b);
 

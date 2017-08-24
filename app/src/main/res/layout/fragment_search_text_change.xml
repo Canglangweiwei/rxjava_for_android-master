@@ -37,7 +37,7 @@
             android:layout_marginRight="20dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/x"
-            android:visibility="gone" />
+            android:visibility="visible" />
     </RelativeLayout>
 
     <ListView
