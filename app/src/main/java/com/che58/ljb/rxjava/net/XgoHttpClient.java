@@ -39,11 +39,12 @@ public class XgoHttpClient {
 
     static {
         mOkHttpClient.setConnectTimeout(5000, TimeUnit.MILLISECONDS);
-        //添加日志过滤器
+        // 添加日志过滤器
         XgoLogInterceptor logInterceptor = new XgoLogInterceptor(new XgoLogInterceptor.Logger() {
+
             @Override
             public void log(String message) {
-                XgoLog.d(message);
+                XgoLog.d("获取结果集：" + message);
             }
         });
         logInterceptor.setLevel(XgoLogInterceptor.Level.BODY);
@@ -57,7 +58,6 @@ public class XgoHttpClient {
     /**
      * 同步模式
      *
-     * @param request
      * @return String(json)
      */
     public String execute2String(Request request) {
@@ -76,9 +76,6 @@ public class XgoHttpClient {
 
     /**
      * 异步CallBack模式
-     *
-     * @param request
-     * @param responseCallback
      */
     public void enqueue(Request request, Callback responseCallback) {
         mOkHttpClient.newCall(request).enqueue(responseCallback);
@@ -95,16 +92,16 @@ public class XgoHttpClient {
         Request.Builder builder = new Request.Builder();
 
         if (XgoHttpClient.METHOD_GET.equalsIgnoreCase(method)) {
-            //GET
+            // GET
             builder.url(initGetRequest(url, params)).get();
         } else if (XgoHttpClient.METHOD_POST.equalsIgnoreCase(method)) {
-            //POST
+            // POST
             builder.url(url).post(initRequestBody(params));
         } else if (XgoHttpClient.METHOD_PUT.equalsIgnoreCase(method)) {
-            //PUT
+            // PUT
             builder.url(url).put(initRequestBody(params));
         } else if (XgoHttpClient.METHOD_DELETE.equalsIgnoreCase(method)) {
-            //DELETE
+            // DELETE
             if (params.size() == 0) {
                 builder.url(url).delete();
             } else {
@@ -121,6 +118,8 @@ public class XgoHttpClient {
     private RequestBody initRequestBody(Map<String, Object> params) {
         MultipartBuilder bodyBuilder = new MultipartBuilder().type(MultipartBuilder.FORM);
         Set<Map.Entry<String, Object>> entries = params.entrySet();
+        XgoLog.w("打印参数：---------- start ---------");
+        StringBuilder builder = new StringBuilder();
         for (Map.Entry<String, Object> entry : entries) {
             String key = entry.getKey();
             Object value = entry.getValue();
@@ -137,10 +136,13 @@ public class XgoHttpClient {
                     XgoLog.e("mimeType is Error !");
                 }
             } else {
+                builder.append(key).append("=").append(value).append("&");
                 XgoLog.w(key + "::" + value);
                 bodyBuilder.addFormDataPart(key, value.toString());
             }
         }
+        XgoLog.w(builder.toString());
+        XgoLog.w("打印参数：---------- end ---------");
         return bodyBuilder.build();
     }
 
@@ -150,7 +152,7 @@ public class XgoHttpClient {
      */
     private String initGetRequest(String url, Map<String, Object> params) {
         StringBuilder sb = new StringBuilder(url);
-        //has params ?
+        // has params ?
         if (params.size() > 0) {
             sb.append('?');
             Set<Map.Entry<String, Object>> entries = params.entrySet();
@@ -165,6 +167,7 @@ public class XgoHttpClient {
             }
             url = new String(sb);
         }
+        XgoLog.w("打印GET请求地址：" + url);
         return url;
     }
 
@@ -172,8 +175,6 @@ public class XgoHttpClient {
      * set timeout
      */
     public void setConnectTimeout(long time) {
-        if (mOkHttpClient != null) {
-            mOkHttpClient.setConnectTimeout(time, TimeUnit.MILLISECONDS);
-        }
+        mOkHttpClient.setConnectTimeout(time, TimeUnit.MILLISECONDS);
     }
 }

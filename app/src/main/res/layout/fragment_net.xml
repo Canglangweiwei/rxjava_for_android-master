@@ -29,6 +29,11 @@
         style="@style/style_btn"
         android:text="@string/request_delete" />
 
+    <Button
+        android:id="@+id/btn_testDate"
+        style="@style/style_btn"
+        android:text="testDate" />
+
     <TextView
         android:id="@+id/tv_result"
         android:layout_width="match_parent"

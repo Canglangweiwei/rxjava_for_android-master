@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.che58.ljb.rxjava.R;
 import com.che58.ljb.rxjava.model.DeleteModel;
 import com.che58.ljb.rxjava.model.GetModel;
+import com.che58.ljb.rxjava.model.KeyValueModel;
 import com.che58.ljb.rxjava.model.PostModel;
 import com.che58.ljb.rxjava.model.PutModel;
 import com.che58.ljb.rxjava.protocol2.TestProtocol;
@@ -124,6 +125,39 @@ public class Net2Fragment extends RxFragment {
                     @Override
                     public void call(Throwable throwable) {
                         tv_result.setText("Delete Error:\r\n" + throwable.getMessage());
+                    }
+                });
+    }
+
+    @OnClick(R.id.btn_testDate)
+    void click_testDate() {
+        TreeMap<String, Object> params = new TreeMap<>();
+        params.put("id", 1);
+        params.put("name", "小鱼儿");
+        params.put("age", 18);
+        params.put("gender", "男");
+        params.put("addr", "青岛市市北区xxx路xxx大厦B座2001");
+        params.put("telphone", "15376753304");
+        mTestProtocol.test8989Date(params)
+                .compose(this.<KeyValueModel>bindToLifecycle())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<KeyValueModel>() {
+                    @Override
+                    public void call(KeyValueModel dataModel) {
+                        if (dataModel == null)
+                            return;
+                        if (dataModel.getData() == null
+                                || dataModel.getData().size() == 0)
+                            return;
+                        StringBuilder builder = new StringBuilder();
+                        for (KeyValueModel.DataBean bean : dataModel.getData())
+                            builder.append(bean.toString()).append("\n");
+                        tv_result.setText("testDate Result:\r\n" + builder.toString());
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        tv_result.setText("testDate Error:\r\n" + throwable.getMessage());
                     }
                 });
     }

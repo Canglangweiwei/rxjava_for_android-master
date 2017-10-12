@@ -2,6 +2,7 @@ package com.che58.ljb.rxjava.protocol2;
 
 import com.che58.ljb.rxjava.model.DeleteModel;
 import com.che58.ljb.rxjava.model.GetModel;
+import com.che58.ljb.rxjava.model.KeyValueModel;
 import com.che58.ljb.rxjava.model.PostModel;
 import com.che58.ljb.rxjava.model.PutModel;
 import com.che58.ljb.rxjava.net.XgoHttpClient;
@@ -44,5 +45,12 @@ public class TestProtocol extends BaseProtocol {
      */
     public Observable<DeleteModel> testDelete() {
         return createObservable(URL, XgoHttpClient.METHOD_DELETE, null, DeleteModel.class);
+    }
+
+    /**
+     * Delete请求
+     */
+    public Observable<KeyValueModel> test8989Date(Map<String, Object> params) {
+        return createObservable("http://0.89892528.cn:8700/test/jsonData.php", XgoHttpClient.METHOD_GET, params, KeyValueModel.class);
     }
 }

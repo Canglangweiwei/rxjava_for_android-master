@@ -15,6 +15,7 @@ import rx.schedulers.Schedulers;
  * BaseProtocol
  * Created by Ljb on 2015/12/22.
  */
+@SuppressWarnings("ALL")
 public abstract class BaseProtocol {
 
     /**
