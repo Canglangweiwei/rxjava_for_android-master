@@ -41,6 +41,7 @@ public class ReuseSubscriberFragment extends RxFragment {
     private void initData() {
         // 订阅者
         mReuseSubscriber = new Observer<Object>() {
+
             @Override
             public void onCompleted() {
 
